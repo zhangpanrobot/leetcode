@@ -3,9 +3,10 @@
  *
  * [209] Minimum Size Subarray Sum
  */
-use std::cmp;
+pub struct Solution {}
 
 // @lc code=start
+use std::cmp;
 impl Solution {
     pub fn min_sub_array_len(target: i32, nums: Vec<i32>) -> i32 {
       let len = nums.len();
