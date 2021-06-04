@@ -3,36 +3,22 @@
  *
  * [20] Valid Parentheses
  */
- use std::collections::HashMap;
  pub struct Solution {}
-
-
-// @lc code=start
+ 
+ // @lc code=start
 impl Solution {
     pub fn is_valid(s: String) -> bool {
-        let v: Vec<char> = Vec::new();
-        let mut map:HashMap<char, char> = HashMap::new();
-        let backet_v_left = vec!['(', '[', '{'];
-        let backet_v_right = vec![')', ']', '}'];
-        map.insert(')', '(');
-        map.insert(']', '[');
-        map.insert('}', '{');
-        let res = true;
-        for (i, c) in s.chars().enumerate() { 
-            // do something with `c`
-            if backet_v_left.contains(&c) {
-                v.push(c);
-            } else if map.contains_key(&c) && map.get(&c) == v[i - 1] {
-                v.pop();
-            } else {
-                res = false;
-                break;
+        let mut stack: Vec<char> = Vec::new();
+        for c in s.chars() {
+            match c {
+                '(' => stack.push(')'),
+                '{' => stack.push('}'),
+                '[' => stack.push(']'),
+                ')'|'}'|']' if Some(c) != stack.pop() => return false,
+                _ => (),
             }
         }
-        if v.is_empty() {
-            res = true
-        }
-        return res;
+        return stack.is_empty();
     }
 }
 // @lc code=end
@@ -45,8 +31,12 @@ mod tests {
         let case1 = "[[[]]]";
         let case2 = "[([]]]";
         let case3 = "[[[]]}";
+        let case4 = "[[[[[]]]";
+        let case5 = "(]";
         assert!(Solution::is_valid(case1.to_owned()));
         assert!(Solution::is_valid(case2.to_owned()));
         assert!(Solution::is_valid(case3.to_owned()));
+        assert!(Solution::is_valid(case4.to_owned()));
+        assert!(Solution::is_valid(case5.to_owned()));
     }
 }
