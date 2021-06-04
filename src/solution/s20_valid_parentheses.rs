@@ -3,18 +3,36 @@
  *
  * [20] Valid Parentheses
  */
-pub struct Solution {}
+ use std::collections::HashMap;
+ pub struct Solution {}
+
 
 // @lc code=start
 impl Solution {
     pub fn is_valid(s: String) -> bool {
-        let bracket1_left = '(';
-        let bracket2_left = '[';
-        let bracket3_left = '{';
-        let bracket1_right = ')';
-        let bracket2_right = ']';
-        let bracket3_right = '}';
-        return false;
+        let v: Vec<char> = Vec::new();
+        let mut map:HashMap<char, char> = HashMap::new();
+        let backet_v_left = vec!['(', '[', '{'];
+        let backet_v_right = vec![')', ']', '}'];
+        map.insert(')', '(');
+        map.insert(']', '[');
+        map.insert('}', '{');
+        let res = true;
+        for (i, c) in s.chars().enumerate() { 
+            // do something with `c`
+            if backet_v_left.contains(&c) {
+                v.push(c);
+            } else if map.contains_key(&c) && map.get(&c) == v[i - 1] {
+                v.pop();
+            } else {
+                res = false;
+                break;
+            }
+        }
+        if v.is_empty() {
+            res = true
+        }
+        return res;
     }
 }
 // @lc code=end
