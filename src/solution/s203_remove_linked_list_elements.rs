@@ -12,19 +12,40 @@ use crate::util::linked_list::{to_list,  ListNode};
 // #[derive(PartialEq, Eq, Clone, Debug)]
 
 impl Solution {
+    // pub fn remove_elements(mut head: Option<Box<ListNode>>, val: i32) -> Option<Box<ListNode>> {
+    //     let mut dummy = Some(Box::new(ListNode::new(0)));
+    //     let mut next = dummy.as_mut();
+    //     while let Some(mut inner) = head {
+    //         head = inner.next.take();
+    //         if inner.val != val {
+    //             next.as_mut().unwrap().next = Some(inner);
+    //             next = next.unwrap().next.as_mut();
+    //         }
+    //     }
+    //     dummy.unwrap().next
+    // }
+    
+    // https://leetcode.com/problems/remove-linked-list-elements/discuss/746297/Rust-no-unwraps.
     pub fn remove_elements(mut head: Option<Box<ListNode>>, val: i32) -> Option<Box<ListNode>> {
-        let mut dummy = Some(Box::new(ListNode::new(0)));
-        let mut next = dummy.as_mut();
-        while let Some(mut inner) = head {
-            head = inner.next.take();
-            if inner.val != val {
-                next.as_mut().unwrap().next = Some(inner);
-                next = next.unwrap().next.as_mut();
+        let mut ptr = &mut head;
+
+        loop {
+            match ptr {
+                None => break,
+                Some(node) if node.val == val => {
+                    *ptr = node.next.take();
+                }
+                Some(node) => {
+                    ptr = &mut node.next;
+                }
             }
         }
-        dummy.unwrap().next
+
+        head
     }
 }
+
+
 // @lc code=end
 
 #[cfg(test)]
