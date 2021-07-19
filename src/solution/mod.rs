@@ -10,4 +10,5 @@ mod s206_reverse_linked_list;
 // mod s933_number_of_recent_calls;
 // mod s389_find_the_difference;
 mod s217_contains_duplicate;
+mod s290_word_pattern;
 // mod s705_design_hash_set;
